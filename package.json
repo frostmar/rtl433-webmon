@@ -1,0 +1,20 @@
+{
+  "name": "rtl433-webmon",
+  "version": "1.0.0",
+  "description": "web front end for a software defined radio reading sensors",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha test/**/*-test.js"
+  },
+  "author": "Mark Frost",
+  "license": "GPL-3.0",
+  "repository": "https://github.com/frostmar/rtl433-webmon.git"
+}
