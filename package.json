@@ -4,7 +4,8 @@
   "description": "web front end for a software defined radio reading sensors",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "socket.io": "^1.4.8"
   },
   "devDependencies": {
     "chai": "^3.5.0",

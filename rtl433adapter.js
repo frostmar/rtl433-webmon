@@ -17,7 +17,6 @@ function Rtl433adapter(child){
 	// subclass extensions
 
 	child.stdout.on('data', function(data){
-		console.log(`adapter adding: ${data}`);
 		lineBuffer += data;
 		let newlinePos = lineBuffer.indexOf("\n");
 		if (newlinePos != -1){
