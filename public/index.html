@@ -11,13 +11,18 @@
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <div id="content"></div>
+    <h1>Power</h1>
+    <div id="sensor1"></div>
+    <div id="sensor2"></div>
+    <h1>Temperature</h1>
+    <div id="sensor3"></div>
+    <div id="sensor4"></div>
     <script type="text/babel">
 
 var SensorReading = React.createClass({
   getInitialState: function() {
     return {
-      Temperature: 'unknown',
+      temperature_C: 'unknown',
       power0: 'unknown',
     };
   },
@@ -26,8 +31,11 @@ var SensorReading = React.createClass({
     var self = this;
     this.socket = io();
     this.socket.on('sensor_event', function (event) {
-    console.log('got sensor_event', event)
-      self.setState(event);
+      if( event[self.props.filterKey] &&
+          event[self.props.filterKey] == self.props.filterValue )
+      {
+        self.setState(event);
+      }
     });
   },
 
@@ -38,17 +46,34 @@ var SensorReading = React.createClass({
   render: function() {
     return (
       <div className="sensorReading">
-        I am a SensorReading<br/>
-        Temperature: {this.state.Temperature}<br/>
+        at {this.state.time}<br/>
+        Temperature: {this.state.temperature_C}<br/>
         power0: {this.state.power0}<br/>
       </div>
     );
   }
 });
 
+// debug logger
+io().on('sensor_event', function (event) {
+  console.log('sensor_event', event);
+});
+
 ReactDOM.render(
-  <SensorReading />,
-  document.getElementById('content')
+  <SensorReading filterKey='dev_id' filterValue='2115' />,
+  document.getElementById('sensor1')
+);
+ReactDOM.render(
+  <SensorReading filterKey='dev_id' filterValue='77' />,
+  document.getElementById('sensor2')
+);
+ReactDOM.render(
+  <SensorReading filterKey='id' filterValue='1' />,
+  document.getElementById('sensor3')
+);
+ReactDOM.render(
+  <SensorReading filterKey='id' filterValue='150' />,
+  document.getElementById('sensor4')
 );
 
     </script>
