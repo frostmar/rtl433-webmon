@@ -1,17 +1,26 @@
 'use strict'
-var expect = require('chai').expect;
-var Rtl433adapter = require('../rtl433adapter.js');
-var EventEmitter = require('events');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+
+const Rtl433adapter = require('../rtl433adapter.js');
+const EventEmitter = require('events');
+
 
 describe('rtl433adapter', function(){
 
   var adapter;
   var fakeChildProcess;
+  var rtl433adapter_spawnChild_stub;
 
   beforeEach(function(){
   	fakeChildProcess = {};
   	fakeChildProcess.stdout = new EventEmitter();
-  	adapter = new Rtl433adapter(fakeChildProcess);
+    rtl433adapter_spawnChild_stub = sinon.stub(Rtl433adapter.prototype, 'spawnChild').returns(fakeChildProcess);
+  	adapter = new Rtl433adapter();
+  });
+
+  afterEach(function(){
+    rtl433adapter_spawnChild_stub.restore();
   });
 
   it('accumulates stdout data events and emits JSON sensor_event', function(){

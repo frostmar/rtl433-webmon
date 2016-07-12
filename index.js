@@ -1,6 +1,5 @@
 'use strict';
 
-const spawn = require('child_process').spawn;
 const Rtl433adapter = require('./rtl433adapter.js');
 const express = require('express');
 const path = require('path');
@@ -40,8 +39,8 @@ io.on('connection', function (socket) {
 
 
 //==== RTL_433 process
-var rtlChildProcess = spawn('rtl_433', ['-F', 'json', '-R', '43']);
-var rtl433 = new Rtl433adapter(rtlChildProcess);
+var options = {devices: [19, 33, 43]};
+var rtl433 = new Rtl433adapter(options);
 
 rtl433.on('sensor_event', (event) => {
 	console.log('sensor_event', event);
