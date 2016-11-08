@@ -2,80 +2,56 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
     <title>Rtl433-monitor</title>
-    <link rel="stylesheet" href="css/base.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.0/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.0/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.16/browser.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="theme.css" rel="stylesheet">
+
     <script src="/socket.io/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="app.js"></script>
   </head>
-  <body>
-    <h1>Power</h1>
-    <div id="sensor1"></div>
-    <div id="sensor2"></div>
-    <h1>Temperature</h1>
-    <div id="sensor3"></div>
-    <div id="sensor4"></div>
-    <script type="text/babel">
+  <body ng-app="rtl433webmon">
+    <div class="container">
 
-var SensorReading = React.createClass({
-  getInitialState: function() {
-    return {
-      temperature_C: 'unknown',
-      power0: 'unknown',
-    };
-  },
-
-  componentDidMount: function() {
-    var self = this;
-    this.socket = io();
-    this.socket.on('sensor_event', function (event) {
-      if( event[self.props.filterKey] &&
-          event[self.props.filterKey] == self.props.filterValue )
-      {
-        self.setState(event);
-      }
-    });
-  },
-
-  componentWillUnmount: function() {
-    //nothing
-  },
-
-  render: function() {
-    return (
-      <div className="sensorReading">
-        at {this.state.time}<br/>
-        Temperature: {this.state.temperature_C}<br/>
-        power0: {this.state.power0}<br/>
+      <div class="page-header">
+        <h1>Power</h1>
       </div>
-    );
-  }
-});
 
-// debug logger
-io().on('sensor_event', function (event) {
-  console.log('sensor_event', event);
-});
+      <div class="panel panel-default" ng-controller="SensorReading as sensor">
+        <div class="panel-heading">Sensor 1</div>
+        <div class="panel-body">
+          {{sensor.event.power0}}W <br/>
+          <small>at {{sensor.event.time}}</small>
+        </div>
+      </div>
 
-ReactDOM.render(
+      <div id="sensor2"></div>
+
+
+      <div class="page-header">
+        <h1>Temperature</h1>
+      </div>
+
+      <div id="sensor3"></div>
+      <div id="sensor4"></div>
+
+<!--
   <SensorReading filterKey='dev_id' filterValue='2115' />,
-  document.getElementById('sensor1')
-);
-ReactDOM.render(
   <SensorReading filterKey='dev_id' filterValue='77' />,
-  document.getElementById('sensor2')
-);
-ReactDOM.render(
   <SensorReading filterKey='id' filterValue='1' />,
-  document.getElementById('sensor3')
-);
-ReactDOM.render(
   <SensorReading filterKey='id' filterValue='150' />,
-  document.getElementById('sensor4')
-);
+-->
 
-    </script>
+    </div>
   </body>
 </html>
