@@ -13,6 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+    <!-- fontawesome -->
+    <script src="https://use.fontawesome.com/1db20647b4.js"></script>
+
     <!-- Custom styles for this template -->
     <link href="theme.css" rel="stylesheet">
 
@@ -23,24 +26,10 @@
   <body ng-app="rtl433webmon">
     <div class="container">
 
-      <div class="page-header">
-        <h1>Temperature</h1>
-      </div>
       <temperature-display deviceid='1'></temperature-display>
       <temperature-display deviceid='150'></temperature-display>
 
-      <div class="page-header">
-        <h1>Power</h1>
-      </div>
       <power-display deviceid='2115'></power-display>
-
-
-<!--
-  <SensorReading filterKey='dev_id' filterValue='2115' />,
-  <SensorReading filterKey='dev_id' filterValue='77' />,
-  <SensorReading filterKey='id' filterValue='1' />,
-  <SensorReading filterKey='id' filterValue='150' />,
--->
 
     </div>
   </body>

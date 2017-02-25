@@ -1,6 +1,7 @@
 'use strict';
 
 const Rtl433adapter = require('./rtl433adapter.js');
+const Rtl433EventCache = require('./rtl433eventcache.js');
 const express = require('express');
 const path = require('path');
 
@@ -20,10 +21,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-// Express: static sensor_event data REST endpoint
-app.get('/api/events', function(req, res) {
-    res.json({'Temperature': 12.34});
-});
 
 var server = app.listen(app.get('port'), function() {
   console.log('Server started: http://localhost:' + app.get('port'));
@@ -33,26 +30,25 @@ var server = app.listen(app.get('port'), function() {
 //==== Socket.io
 var io = require('socket.io')(server);
 
+/** websocket connection handler */
 io.on('connection', function (socket) {
 	console.log('New client connected!');
+
+  eventCache.getEvents().forEach( function(event){
+    console.log('sendng new client cached event: '+JSON.stringify(event));
+    socket.emit('sensor_event', event);
+  });
+
 });
 
 
 //==== RTL_433 process
 var options = {devices: [19, 33, 43]};
 var rtl433 = new Rtl433adapter(options);
+var eventCache = new Rtl433EventCache();
 
 rtl433.on('sensor_event', (event) => {
 	console.log('sensor_event', event);
+  eventCache.store(event);
 	io.volatile.emit('sensor_event', event);
 });
-
-// send fake sensor_events
-/*
-setInterval(sendRandomSensorEvent, 1000);
-function sendRandomSensorEvent(socket) {
-	var temp = Math.random();
-	console.log('sending:', temp);
-	io.volatile.emit('sensor_event', {'Temperature': temp});
-};
-*/

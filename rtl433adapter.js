@@ -6,9 +6,12 @@ const spawn = require('child_process').spawn;
 util.inherits(Rtl433adapter, EventEmitter);
 
 /**
+ * Adapter for a rtl433 child process (decoding 433MHz radio device messages).
+ * This class is an EventEmitter: parses the child process's stdout and emits
+* 'sensor_event' messages
  * @constructor
  * @param {object}   options
- * @param {Number[]} options.devices - rtl_433 device numbers (-R parameters) to listen for 
+ * @param {Number[]} options.devices - rtl_433 device numbers (-R parameters) to listen for
  */
 function Rtl433adapter(options){
 	var self = this;

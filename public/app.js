@@ -6,7 +6,6 @@ var app = angular.module('rtl433webmon', [])
 
 // Angular service holding sensor data (from websocket)
 app.service('SensorDataService', function ($rootScope) {
-  console.log('sensorDataService constructing');
   var self = this;
   self.sensordata = {
     CurrentCost: {},
@@ -62,7 +61,6 @@ function TemperatureDisplayController($scope, SensorDataService) {
   var ctrl = this;
   ctrl.temperature_C = undefined;
   ctrl.humidity = undefined;
-  console.log('constructing TemperatureDisplayController for deviceid='+ctrl.deviceid);
 
   $scope.$watch(watchFunction, onDataChange);
 
@@ -93,7 +91,6 @@ app.component('powerDisplay', {
 function PowerDisplayController($scope, SensorDataService) {
   var ctrl = this;
   ctrl.power = undefined;
-  console.log('constructing PowerDisplayController for deviceid='+ctrl.deviceid);
 
   $scope.$watch(watchFunction, onDataChange);
 
