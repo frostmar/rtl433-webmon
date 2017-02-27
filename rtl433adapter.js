@@ -1,3 +1,6 @@
+'use strict';
+
+const debug = require('debug')('webmon:rtl433adapter');
 const EventEmitter = require('events').EventEmitter;
 const util = require('util');
 const spawn = require('child_process').spawn;
@@ -17,7 +20,7 @@ function Rtl433adapter(options){
 	var self = this;
 	var lineBuffer = '';
 	this.options = options;
-console.log('options', options);
+  debug('constructed with options: %o', options);
 
 	// call the super constructor to initialize `this`
 	EventEmitter.call(this);
@@ -48,7 +51,7 @@ console.log('options', options);
 Rtl433adapter.prototype.spawnChild = function(){
 	var args = ['-F', 'json'];
 	this.options.devices.forEach( (device) => {args.push('-R'); args.push(device)});
-	console.log('spawning with args:', args);
+	debug('spawning rtl_433 with args: ', args);
 	return spawn('rtl_433', args);
 };
 
