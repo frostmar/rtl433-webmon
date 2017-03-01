@@ -2,7 +2,7 @@
   <div class="panel-heading">Temperature</div>
   <div class="panel-body">
     <div>
-      <span class="text-muted fa fa-thermometer-quarter"></span> {{$ctrl.temperature_C}}°C
+      <span class="text-muted fa fa-thermometer-quarter"></span> {{$ctrl.temperature_C | number:1 }}°C
     </div>
     <div ng-if="$ctrl.humidity">
       <span class="text-muted fa fa-tint"></span> {{$ctrl.humidity}}% RH

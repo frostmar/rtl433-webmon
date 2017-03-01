@@ -53,13 +53,15 @@ app.component('temperatureDisplay', {
   templateUrl: 'temperatureDisplay.html',
   controller: TemperatureDisplayController,
   bindings: {
-    deviceid: '<'
+    deviceid: '<',
+    temperatureOffset: '<'
   }
 });
 
 function TemperatureDisplayController($scope, SensorDataService) {
   var ctrl = this;
   ctrl.temperature_C = undefined;
+  ctrl.temperatureOffset = ctrl.temperatureOffset ? ctrl.temperatureOffset : 0;
   ctrl.humidity = undefined;
 
   $scope.$watch(watchFunction, onDataChange);
@@ -71,7 +73,7 @@ function TemperatureDisplayController($scope, SensorDataService) {
   function onDataChange(newValue, oldValue){
     console.log('TemperatureDisplayController onDataChange for deviceid='+ctrl.deviceid);
     if (newValue){
-      ctrl.temperature_C = newValue.temperature_C;
+      ctrl.temperature_C = newValue.temperature_C + ctrl.temperatureOffset;
       ctrl.humidity = newValue.humidity;
       ctrl.lowbattery = (newValue.battery === 'LOW');
     }
