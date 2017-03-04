@@ -2,11 +2,12 @@
   <div class="panel-heading">Temperature</div>
   <div class="panel-body">
     <div>
-      <span class="text-muted fa fa-thermometer-quarter"></span> {{$ctrl.temperature_C | number:1 }}°C
+      <span class="text-muted fa fa-thermometer-quarter"></span> {{$ctrl.temperature_C | number:2 }}°C
     </div>
     <div ng-if="$ctrl.humidity">
       <span class="text-muted fa fa-tint"></span> {{$ctrl.humidity}}% RH
     </div>
-    <small style="opacity: 0.3">deviceid {{$ctrl.deviceid}}</small> <span ng-if="$ctrl.lowbattery" style="color:red" class="fa fa-battery-quarter"></span>
+    <small style="opacity: 0.3">device {{$ctrl.deviceid}}</small> <span ng-if="$ctrl.lowbattery" style="color:red" class="fa fa-battery-quarter"></span><br/>
+    <small style="opacity: 0.3">{{$ctrl.time}}</small>
   </div>
 </div>

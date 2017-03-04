@@ -76,6 +76,7 @@ function TemperatureDisplayController($scope, SensorDataService) {
       ctrl.temperature_C = newValue.temperature_C + ctrl.temperatureOffset;
       ctrl.humidity = newValue.humidity;
       ctrl.lowbattery = (newValue.battery === 'LOW');
+      ctrl.time = newValue.time;
     }
   }
 }
@@ -104,6 +105,7 @@ function PowerDisplayController($scope, SensorDataService) {
     console.log('PowerDisplayController onDataChange for deviceid='+ctrl.deviceid);
     if (newValue){
       ctrl.power = newValue.power0;
+      ctrl.time = newValue.time;
     }
   }
 }
