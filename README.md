@@ -9,6 +9,8 @@ Uses [rtl_433](https://github.com/merbanan/rtl_433) to receive and decode sensor
 - Temperature/humidity (variety of cheap 433MHz temperature sensors)
 - Power (CurrentCost TX watt meter)
 
+![screenshot](./screenshot.png)
+
 ### Running
 Uses [`forever`](https://github.com/foreverjs/forever) to run as a daemon.  
 `npm run start-daemon`  
