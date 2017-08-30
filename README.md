@@ -8,6 +8,7 @@ Uses [rtl_433](https://github.com/merbanan/rtl_433) to receive and decode sensor
 ### Displays:
 - Temperature/humidity (variety of cheap 433MHz temperature sensors)
 - Power (CurrentCost TX watt meter)
+- Air Quality (PMS5003 particle sensor, attached via serial port)
 
 ![screenshot](./screenshot.png)
 
