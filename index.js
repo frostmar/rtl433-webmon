@@ -2,6 +2,7 @@
 
 const debug = require('debug')('webmon');
 const Rtl433adapter = require('./rtl433adapter.js');
+const Pms5003adapter = require('./pms5003adapter.js');
 const Rtl433EventCache = require('./rtl433eventcache.js');
 const express = require('express');
 const path = require('path');
@@ -44,13 +45,25 @@ io.on('connection', function (socket) {
 });
 
 
-//==== RTL_433 process
-var options = {devices: [19, 33, 43]};
-var rtl433 = new Rtl433adapter(options);
-var eventCache = new Rtl433EventCache();
+//==== RTL433 radio
+var rtl433_options = {devices: [19, 33, 43]};
+var rtl433 = new Rtl433adapter(rtl433_options);
+rtl433.on('sensor_event', processEvent);
 
-rtl433.on('sensor_event', (event) => {
+
+//==== PMS5003 sensor
+var pms5003_options = {serialdevice: '/dev/serial0'};
+var pms5003 = new Pms5003adapter(pms5003_options);
+pms5003.on('sensor_event', processEvent);
+
+
+var eventCache = new Rtl433EventCache();
+/**
+ * Process a sensor_event:
+ * cache and send to all connected websockets
+ */
+function processEvent(event) {
 	debug('sensor_event: %O', event);
   eventCache.store(event);
 	io.volatile.emit('sensor_event', event);
-});
+}

@@ -23,6 +23,9 @@ app.service('SensorDataService', function ($rootScope) {
     } else if ( event.model === 'Nexus Temperature/Humidity'  ||  event.model === 'WT450 sensor'){
       // temperature/humidity sensor
       self.sensordata.Temperature[event.id] = event;
+    } else if ( event.model === 'pms5003'){
+      // air quality sensor
+      self.sensordata.airQuality = event
     }
     $rootScope.$digest();
   });
@@ -41,6 +44,14 @@ app.service('SensorDataService', function ($rootScope) {
    */
   self.getPowerSensorData = function(deviceId){
     return self.sensordata.CurrentCost[deviceId];
+  }
+
+  /**
+   * get data object for a particular temperature sensor
+   * @returns {object}
+   */
+  self.getAirQualitySensorData = function(deviceId){
+    return self.sensordata.airQuality;
   }
 
 });
@@ -105,6 +116,35 @@ function PowerDisplayController($scope, SensorDataService) {
     console.log('PowerDisplayController onDataChange for deviceid='+ctrl.deviceid);
     if (newValue){
       ctrl.power = newValue.power0;
+      ctrl.time = newValue.time;
+    }
+  }
+}
+
+
+//////////////////////////////////
+
+app.component('airQualityDisplay', {
+  templateUrl: 'airQualityDisplay.html',
+  controller: AirQualityDisplayController,
+  bindings: {}
+});
+
+function AirQualityDisplayController($scope, SensorDataService) {
+  var ctrl = this;
+  ctrl.pm10 = undefined;
+
+  $scope.$watch(watchFunction, onDataChange);
+
+  function watchFunction(){
+    return SensorDataService.getAirQualitySensorData();
+  }
+
+  function onDataChange(newValue, oldValue){
+    console.log('AirQualityDisplayController onDataChange for pms5003');
+    if (newValue){
+      ctrl.pm2_5 = newValue.pm2_5;
+      ctrl.pm10 = newValue.pm10;
       ctrl.time = newValue.time;
     }
   }
