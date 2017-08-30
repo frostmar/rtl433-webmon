@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "daemon-start": "forever start index.js",
+    "daemon-start": "forever start --minUptime 1000 --spinSleepTime 1000 index.js",
     "daemon-stop": "forever stop index.js",
     "pretest": "standard",
     "test": "mocha test/**/*-test.js",
