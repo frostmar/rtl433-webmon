@@ -12,14 +12,20 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
-    "sinon": "^1.17.4"
+    "sinon": "^1.17.4",
+    "standard": "^10.0.3"
   },
   "scripts": {
     "start": "node index.js",
     "daemon-start": "forever start index.js",
     "daemon-stop": "forever stop index.js",
+    "pretest": "standard",
     "test": "mocha test/**/*-test.js",
     "debug": "DEBUG=webmon* npm start"
+  },
+  "standard": {
+    "globals": ["angular", "io"],
+    "envs": ["mocha"]
   },
   "author": "Mark Frost",
   "license": "GPL-3.0",
