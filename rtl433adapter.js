@@ -16,8 +16,8 @@ util.inherits(Rtl433adapter, EventEmitter)
  * @param {Number[]} options.devices - rtl_433 device numbers (-R parameters) to listen for
  */
 function Rtl433adapter (options) {
-  var self = this
-  var lineBuffer = ''
+  const self = this
+  let lineBuffer = ''
   this.options = options
   debug('constructed with options: %o', options)
 
@@ -35,7 +35,7 @@ function Rtl433adapter (options) {
     if (newlinePos !== -1) {
       let readingString = lineBuffer.substring(0, newlinePos)
       lineBuffer = lineBuffer.substring(newlinePos + 1)
-      var reading = JSON.parse(readingString)
+      const reading = JSON.parse(readingString)
       self.emit('sensor_event', reading)
     }
   })
@@ -47,7 +47,7 @@ function Rtl433adapter (options) {
  * @returns {ChildProcess}
  */
 Rtl433adapter.prototype.spawnChild = function () {
-  var args = ['-F', 'json']
+  const args = ['-F', 'json']
   this.options.devices.forEach((device) => { args.push('-R'); args.push(device) })
   debug('spawning rtl_433 with args: ', args)
   return spawn('rtl_433', args)

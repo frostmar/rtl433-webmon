@@ -41,19 +41,20 @@ io.on('connection', function (socket) {
 })
 
 // ==== RTL433 radio
-var rtl433Options = {devices: [19, 33, 43]}
-var rtl433 = new Rtl433adapter(rtl433Options)
+const rtl433Options = {devices: [19, 33, 43]}
+const rtl433 = new Rtl433adapter(rtl433Options)
 rtl433.on('sensor_event', processEvent)
 
 // ==== PMS5003 sensor
-var pms5003Options = {serialdevice: '/dev/serial0'}
-var pms5003 = new Pms5003adapter(pms5003Options)
+const pms5003Options = {serialdevice: '/dev/serial0'}
+const pms5003 = new Pms5003adapter(pms5003Options)
 pms5003.on('sensor_event', processEvent)
 
 var eventCache = new Rtl433EventCache()
 /**
  * Process a sensor_event:
  * cache and send to all connected websockets
+ * @param {object} event - event structure as output by rtl_433
  */
 function processEvent (event) {
   debug('sensor_event: %O', event)

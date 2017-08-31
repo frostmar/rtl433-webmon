@@ -3,6 +3,7 @@
 /**
  * Cache of last event of each sensor
  * (identified by key made from model and an id field)
+ * @constructor
  */
 function Rtl433EventCache () {
   this.cache = {} // cache: <id> => <event>
@@ -13,7 +14,7 @@ function Rtl433EventCache () {
  * @param {object} newEvent - rtl433adapter event message
  */
 Rtl433EventCache.prototype.store = function (newEvent) {
-  var key = this.getEventKey(newEvent)
+  const key = this.getEventKey(newEvent)
   this.cache[key] = newEvent
 }
 
@@ -23,7 +24,7 @@ Rtl433EventCache.prototype.store = function (newEvent) {
  * @returns {string} key for the event
  */
 Rtl433EventCache.prototype.getEventKey = function (event) {
-  var id = event.id ? event.id : event.dev_id
+  const id = event.id ? event.id : event.dev_id
   return event.model + '|' + id
 }
 
