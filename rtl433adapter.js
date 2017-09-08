@@ -22,10 +22,8 @@ class Rtl433adapter extends EventEmitter {
 
     // spawn child process
     this.childProcess = this.spawnChild()
-
-    // subclass extensions
-
-    this.childProcess.stdout.on('data', function (data) {
+    this.childProcess.stdout.on('data', (data) => {
+      debug('rtl433 data received: '+ data)
       lineBuffer += data
       let newlinePos = lineBuffer.indexOf('\n')
       if (newlinePos !== -1) {
