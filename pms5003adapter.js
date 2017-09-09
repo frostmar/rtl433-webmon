@@ -7,7 +7,6 @@ const SerialPort = require('serialport')
 const frameHeader = Buffer.from([0x42, 0x4d])
 
 class Pms5003adapter extends EventEmitter {
-
   /**
    * Adapter for a Plantower PMS5003 air quality sensor (parsing data from a serial port).
    * This class is an EventEmitter: parses the sensor data and emits
@@ -67,7 +66,6 @@ class Pms5003adapter extends EventEmitter {
     }
     return frame
   }
-
 }
 
 module.exports = Pms5003adapter

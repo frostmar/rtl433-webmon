@@ -5,7 +5,6 @@ const EventEmitter = require('events').EventEmitter
 const spawn = require('child_process').spawn
 
 class Rtl433adapter extends EventEmitter {
-
   /**
    * Adapter for a rtl433 child process (decoding 433MHz radio device messages).
    * This class is an EventEmitter: parses the child process's stdout and emits
@@ -23,7 +22,7 @@ class Rtl433adapter extends EventEmitter {
     // spawn child process
     this.childProcess = this.spawnChild()
     this.childProcess.stdout.on('data', (data) => {
-      debug('rtl433 data received: '+ data)
+      debug('rtl433 data received: ' + data)
       lineBuffer += data
       let newlinePos = lineBuffer.indexOf('\n')
       if (newlinePos !== -1) {
@@ -46,7 +45,6 @@ class Rtl433adapter extends EventEmitter {
     debug('spawning rtl_433 with args: ', args)
     return spawn('rtl_433', args)
   }
-
 }
 
 module.exports = Rtl433adapter

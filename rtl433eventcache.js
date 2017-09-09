@@ -35,7 +35,6 @@ class Rtl433EventCache {
   getEvents () {
     return Object.values(this.cache)
   }
-
 }
 
 module.exports = Rtl433EventCache
