@@ -4,14 +4,14 @@
   "description": "web front end for a software defined radio reading sensors",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.14.0",
+    "express": "^4.16.4",
     "forever": "^0.15.3",
     "serialport": "^5.0.0",
-    "socket.io": "^1.4.8"
+    "socket.io": "^1.7.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.1.2",
+    "mocha": "^3.5.3",
     "sinon": "^1.17.4",
     "standard": "^10.0.3"
   },
@@ -24,8 +24,13 @@
     "debug": "DEBUG=webmon* npm start"
   },
   "standard": {
-    "globals": ["angular", "io"],
-    "envs": ["mocha"]
+    "globals": [
+      "angular",
+      "io"
+    ],
+    "envs": [
+      "mocha"
+    ]
   },
   "author": "Mark Frost",
   "license": "GPL-3.0",
