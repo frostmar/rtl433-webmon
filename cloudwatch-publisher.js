@@ -3,6 +3,36 @@ const AWS = require('aws-sdk')
 AWS.config.update(AWS.config.loadFromPath('./secret_config/aws-config.json'))
 
 /**
+ * class to collect values to publish as a statistics set
+ * computes the min/max/average
+ */
+class MetricsSet {
+  constructor () {
+    this.count = 0
+    this.min = Number.POSITIVE_INFINITY
+    this.max = Number.NEGATIVE_INFINITY
+    this.sum = 0
+  }
+
+  addMetric (value) {
+    this.count++
+    this.min = Math.min(this.min, value)
+    this.max = Math.max(this.max, value)
+    this.sum += value
+  }
+
+  getStatisticsValues () {
+    debug('getStatisticsValues returning %O', this)
+    return {
+      Maximum: this.max,
+      Minimum: this.min,
+      SampleCount: this.count,
+      Sum: this.sum
+    }
+  }
+}
+
+/**
  * Class to publish sensor readings to Amazon Cloudwatch as custom metrics
  */
 class CloudwatchPublisher {
@@ -24,23 +54,35 @@ class CloudwatchPublisher {
    * event - {object} sensor event
    */
   newEvent (event) {
-    // debug('newEvent()', JSON.stringify(event))
+    // debug('newEvent() %O', event)
 
     if (event.pm2_5) {
       // air quality
-      this.pendingReadings['airquality/pm2.5'] = event.pm2_5
+      if (!this.pendingReadings['airquality/pm2.5']) {
+        this.pendingReadings['airquality/pm2.5'] = new MetricsSet()
+      }
+      this.pendingReadings['airquality/pm2.5'].addMetric(event.pm2_5)
     }
     if (event.power0) {
       // power meter
-      this.pendingReadings['electricity/power'] = event.power0
+      if (!this.pendingReadings['electricity/power']) {
+        this.pendingReadings['electricity/power'] = new MetricsSet()
+      }
+      this.pendingReadings['electricity/power'].addMetric(event.power0)
     }
     if (event.temperature_C) {
       // temperature
-      this.pendingReadings['temperature/' + event.sensorName] = event.temperature_C
+      if (!this.pendingReadings['temperature/' + event.sensorName]) {
+        this.pendingReadings['temperature/' + event.sensorName] = new MetricsSet()
+      }
+      this.pendingReadings['temperature/' + event.sensorName].addMetric(event.temperature_C)
     }
     if (event.humidity) {
       // humidity
-      this.pendingReadings['humidity/' + event.sensorName] = event.humidity
+      if (!this.pendingReadings['humidity/' + event.sensorName]) {
+        this.pendingReadings['humidity/' + event.sensorName] = new MetricsSet()
+      }
+      this.pendingReadings['humidity/' + event.sensorName].addMetric(event.humidity)
     }
   }
 
@@ -48,16 +90,16 @@ class CloudwatchPublisher {
    * Send readings to Amazon CloudWatch
    */
   sendReadings () {
-    debug('sendReadings(): pendingReadings: ', JSON.stringify(this.pendingReadings))
+    debug('sendReadings(): pendingReadings: %O', this.pendingReadings)
 
     for (const metricName in this.pendingReadings) {
-      const metricValue = this.pendingReadings[metricName]
+      const metricSet = this.pendingReadings[metricName]
       const putMetricParams = {
         Namespace: 'house',
         MetricData: [
           {
             MetricName: metricName,
-            Value: metricValue,
+            StatisticValues: metricSet.getStatisticsValues(),
             StorageResolution: 60
           }
         ]
