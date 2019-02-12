@@ -4,7 +4,7 @@ const debug = require('debug')('webmon')
 const Rtl433adapter = require('./rtl433adapter.js')
 const Pms5003adapter = require('./pms5003adapter.js')
 const Rtl433EventCache = require('./rtl433eventcache.js')
-const CloudwatchPublisher  = require('./cloudwatch-publisher.js')
+const CloudwatchPublisher = require('./cloudwatch-publisher.js')
 const express = require('express')
 const path = require('path')
 
@@ -16,9 +16,9 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 
 // Express: middleware to set headers
 app.use(function (req, res, next) {
-    // Set permissive CORS header
+  // Set permissive CORS header
   res.setHeader('Access-Control-Allow-Origin', '*')
-    // Disable caching so we'll always get the latest
+  // Disable caching so we'll always get the latest
   res.setHeader('Cache-Control', 'no-cache')
   next()
 })
@@ -42,12 +42,12 @@ io.on('connection', function (socket) {
 })
 
 // ==== RTL433 radio
-const rtl433Options = {devices: [19, 33, 43]}
+const rtl433Options = { devices: [19, 33, 43] }
 const rtl433 = new Rtl433adapter(rtl433Options)
 rtl433.on('sensor_event', processEvent)
 
 // ==== PMS5003 air-quality sensor
-const pms5003Options = {serialdevice: '/dev/serial0'}
+const pms5003Options = { serialdevice: '/dev/serial0' }
 const pms5003 = new Pms5003adapter(pms5003Options)
 pms5003.on('sensor_event', processEvent)
 

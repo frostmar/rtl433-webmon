@@ -75,7 +75,7 @@ class CloudwatchPublisher {
       }
       this.cloudwatch.putMetricData(putMetricParams, (err, data) => {
         if (err) console.log('Error putting data to CloudWatch: ' + err, err.stack)
-        else console.log('Put data to CloudWatch OK: ' + data)
+        else console.log('Put data to CloudWatch OK: ' + JSON.stringify(data))
       })
     }
 

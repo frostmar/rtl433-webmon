@@ -20,7 +20,7 @@ class Pms5003adapter extends EventEmitter {
     debug('constructed with options: %o', options)
     let serialdata = Buffer.from([])
 
-    const port = new SerialPort(options.serialdevice, {baudrate: 9600})
+    const port = new SerialPort(options.serialdevice, { baudRate: 9600 })
     port.on('data', (newdata) => {
       debug(`serial data received: ${newdata.length} bytes`)
       serialdata = Buffer.concat([serialdata, newdata])
@@ -49,9 +49,9 @@ class Pms5003adapter extends EventEmitter {
     debug('getPacket() entry')
     const frame = {
       'framelength': buffer.readInt16BE(2),
-      'apm1': buffer.readInt16BE(4),  // Data  1 refers to PM1.0 concentration unit μg/m3 (CF=1，standard particle)
-      'apm2_5': buffer.readInt16BE(6),  // Data  2 refers to PM2.5 concentration unit μg/m3 (CF=1，standard particle)
-      'apm10': buffer.readInt16BE(8),  // Data  3 refers to PM10  concentration unit μg/m3 (CF=1，standard particle)
+      'apm1': buffer.readInt16BE(4), // Data  1 refers to PM1.0 concentration unit μg/m3 (CF=1，standard particle)
+      'apm2_5': buffer.readInt16BE(6), // Data  2 refers to PM2.5 concentration unit μg/m3 (CF=1，standard particle)
+      'apm10': buffer.readInt16BE(8), // Data  3 refers to PM10  concentration unit μg/m3 (CF=1，standard particle)
       'pm1': buffer.readInt16BE(10), // Data  4 refers to PM1.0 concentration unit μg/m3 (under atmospheric environment)
       'pm2_5': buffer.readInt16BE(12), // Data  5 refers to PM2.5 concentration unit μg/m3 (under atmospheric environment)
       'pm10': buffer.readInt16BE(14), // Data  6 refers to PM10  concentration unit μg/m3 (under atmospheric environment)
