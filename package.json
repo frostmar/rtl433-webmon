@@ -4,6 +4,7 @@
   "description": "web front end for a software defined radio reading sensors",
   "main": "index.js",
   "dependencies": {
+    "aws-sdk": "^2.400.0",
     "express": "^4.16.4",
     "forever": "^0.15.3",
     "serialport": "^5.0.0",

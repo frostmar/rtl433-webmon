@@ -4,6 +4,7 @@ const debug = require('debug')('webmon')
 const Rtl433adapter = require('./rtl433adapter.js')
 const Pms5003adapter = require('./pms5003adapter.js')
 const Rtl433EventCache = require('./rtl433eventcache.js')
+const CloudwatchPublisher  = require('./cloudwatch-publisher.js')
 const express = require('express')
 const path = require('path')
 
@@ -45,12 +46,15 @@ const rtl433Options = {devices: [19, 33, 43]}
 const rtl433 = new Rtl433adapter(rtl433Options)
 rtl433.on('sensor_event', processEvent)
 
-// ==== PMS5003 sensor
+// ==== PMS5003 air-quality sensor
 const pms5003Options = {serialdevice: '/dev/serial0'}
 const pms5003 = new Pms5003adapter(pms5003Options)
 pms5003.on('sensor_event', processEvent)
 
-var eventCache = new Rtl433EventCache()
+const eventCache = new Rtl433EventCache()
+
+const publisher = new CloudwatchPublisher()
+
 /**
  * Process a sensor_event:
  * cache and send to all connected websockets
@@ -60,4 +64,5 @@ function processEvent (event) {
   debug('sensor_event: %O', event)
   eventCache.store(event)
   io.volatile.emit('sensor_event', event)
+  publisher.newEvent(event)
 }
