@@ -15,12 +15,7 @@ class CloudwatchPublisher {
     this.pendingReadings = {}
     this.cloudwatch = new AWS.CloudWatch()
 
-    this.sensorId2Name = {
-      150: 'garage',
-      1: 'outdoor'
-    }
-
-    // this.sendReadings() // !!todo: remove (send immendiately for testing only)
+    // this.sendReadings() // (send immendiately for testing only)
     setInterval(this.sendReadings.bind(this), PUBLISH_INTERVAL_MSEC)
   }
 
@@ -41,17 +36,11 @@ class CloudwatchPublisher {
     }
     if (event.temperature_C) {
       // temperature
-      const sensorName = this.sensorId2Name[event.id]
-      if (sensorName) {
-        this.pendingReadings['temperature/' + sensorName] = event.temperature_C
-      }
+      this.pendingReadings['temperature/' + event.sensorName] = event.temperature_C
     }
     if (event.humidity) {
       // humidity
-      const sensorName = this.sensorId2Name[event.id]
-      if (sensorName) {
-        this.pendingReadings['humidity/' + sensorName] = event.humidity
-      }
+      this.pendingReadings['humidity/' + event.sensorName] = event.humidity
     }
   }
 

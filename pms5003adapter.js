@@ -34,6 +34,7 @@ class Pms5003adapter extends EventEmitter {
         let frame = this.readFrame(frameBuffer)
         frame.time = new Date().toISOString()
         frame.model = 'pms5003'
+        frame.id = 1
         this.emit('sensor_event', frame)
       }
     })

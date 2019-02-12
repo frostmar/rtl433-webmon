@@ -85,6 +85,7 @@ function TemperatureDisplayController ($scope, SensorDataService) {
       ctrl.humidity = newValue.humidity
       ctrl.lowbattery = (newValue.battery === 'LOW')
       ctrl.time = newValue.time
+      ctrl.sensorName = newValue.sensorName
     }
   }
 }

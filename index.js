@@ -61,8 +61,32 @@ const publisher = new CloudwatchPublisher()
  * @param {object} event - event structure as output by rtl_433
  */
 function processEvent (event) {
-  debug('sensor_event: %O', event)
-  eventCache.store(event)
-  io.volatile.emit('sensor_event', event)
-  publisher.newEvent(event)
+  debug('processEvent (raw): %O', event)
+  addNameToEvent(event)
+  if (event.sensorName) {
+    debug('processEvent: (named): %O', event)
+    eventCache.store(event)
+    io.volatile.emit('sensor_event', event)
+    publisher.newEvent(event)
+  }
+}
+
+const sensorId2Name = {
+  'Nexus Temperature/Humidity|132': 'garage',
+  'WT450 sensor|1': 'outdoor',
+  'CurrentCost TX|2115': 'electricity',
+  'pms5003|1': 'airquality'
+}
+
+/**
+ * Add sensorName property to relevant events
+ * @param {object} event - sensor event
+ */
+function addNameToEvent (event) {
+  for (const sensorId in sensorId2Name) {
+    const id = event.id || event.dev_id
+    if (sensorId === event.model + '|' + id) {
+      event.sensorName = sensorId2Name[sensorId]
+    }
+  }
 }
