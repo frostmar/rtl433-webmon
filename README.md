@@ -5,10 +5,19 @@ data received from 433MHz sensors.
 
 Uses [rtl_433](https://github.com/merbanan/rtl_433) to receive and decode sensors transmissions
 
-### Displays:
-- Temperature/humidity (variety of cheap 433MHz temperature sensors)
-- Power (CurrentCost TX watt meter)
-- Air Quality (PMS5003 particle sensor, attached via serial port)
+### Inputs:
+- 433MHz temperature/humidity sensors that can be received and decoded by rtl_433
+- PMS5003 air quality particulates sensor via serial port
+- temperature/humidity device polled from Samsung SmartThings cloud
+
+### Logging:
+- Readings logged every 5mins to AWS CloudWatch
+
+### Web Display:
+Immediate readings for 
+- Temperature and humidity (%RH)
+- Electrical Power (Watts)
+- Air Quality (PM2.5 and PM10 counts)
 
 ![screenshot](./screenshot.png)
 

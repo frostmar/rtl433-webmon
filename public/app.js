@@ -16,13 +16,13 @@ app.service('SensorDataService', function ($rootScope) {
     // debug logging
     console.log('websocket sensor_event', event)
 
-    if (event.model === 'CurrentCost TX') {
+    if (typeof event.power0 !== 'undefined') {
       // power sensor
       self.sensordata.CurrentCost[event.dev_id] = event
-    } else if (event.model === 'Nexus Temperature/Humidity' || event.model === 'WT450 sensor') {
+    } else if (typeof event.temperature_C !== 'undefined') {
       // temperature/humidity sensor
       self.sensordata.Temperature[event.id] = event
-    } else if (event.model === 'pms5003') {
+    } else if (typeof event.pm2_5 !== 'undefined') {
       // air quality sensor
       self.sensordata.airQuality = event
     }

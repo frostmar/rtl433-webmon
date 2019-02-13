@@ -4,6 +4,7 @@ const debug = require('debug')('webmon')
 const Rtl433adapter = require('./rtl433adapter.js')
 const Pms5003adapter = require('./pms5003adapter.js')
 const Rtl433EventCache = require('./rtl433eventcache.js')
+const SmartThingsAdapter = require('./smartthings-adapter.js')
 const CloudwatchPublisher = require('./cloudwatch-publisher.js')
 const express = require('express')
 const path = require('path')
@@ -41,15 +42,19 @@ io.on('connection', function (socket) {
   })
 })
 
-// ==== RTL433 radio
+// ==== input: RTL433 radio
 const rtl433Options = { devices: [19, 33, 43] }
 const rtl433 = new Rtl433adapter(rtl433Options)
 rtl433.on('sensor_event', processEvent)
 
-// ==== PMS5003 air-quality sensor
+// ==== input: PMS5003 air-quality sensor
 const pms5003Options = { serialdevice: '/dev/serial0' }
 const pms5003 = new Pms5003adapter(pms5003Options)
 pms5003.on('sensor_event', processEvent)
+
+// ==== input: device readings from Samsung SmartThings cloud
+const smartThingsAdapter = new SmartThingsAdapter()
+smartThingsAdapter.on('sensor_event', processEvent)
 
 const eventCache = new Rtl433EventCache()
 
@@ -57,7 +62,7 @@ const publisher = new CloudwatchPublisher()
 
 /**
  * Process a sensor_event:
- * cache and send to all connected websockets
+ * name identified sensors, cache, send to all connected websockets, publish to database
  * @param {object} event - event structure as output by rtl_433
  */
 function processEvent (event) {
@@ -71,7 +76,9 @@ function processEvent (event) {
   }
 }
 
+// our sensors - events from a model|id not listed here will get ignored
 const sensorId2Name = {
+  'SmartThings Temperature/Humidity|99': 'indoor',
   'Nexus Temperature/Humidity|132': 'garage',
   'WT450 sensor|1': 'outdoor',
   'CurrentCost TX|2115': 'electricity',
