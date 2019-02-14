@@ -1,6 +1,7 @@
 const EventEmitter = require('events').EventEmitter
 const debug = require('debug')('webmon:smartthings-adapter')
 const request = require('request-promise-native')
+const moment = require('moment')
 const smartthingsConfig = require('./secret_config/smartthings-config.json')
 const smartthingsBaseUrl = 'https://api.smartthings.com/v1'
 
@@ -23,7 +24,7 @@ class SmartThingsAdapter extends EventEmitter {
     const event = {
       model: 'SmartThings Temperature/Humidity',
       id: 99,
-      time: new Date().toISOString(),
+      time: moment().format('YYYY-MM-DD HH:mm:ss'),
       temperature_C: tempHumidity.temp,
       humidity: tempHumidity.humidity,
       battery: 'OK'

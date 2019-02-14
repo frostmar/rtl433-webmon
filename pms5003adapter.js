@@ -3,7 +3,7 @@
 const debug = require('debug')('webmon:pms5003adapter')
 const EventEmitter = require('events').EventEmitter
 const SerialPort = require('serialport')
-
+const moment = require('moment')
 const frameHeader = Buffer.from([0x42, 0x4d])
 
 class Pms5003adapter extends EventEmitter {
@@ -32,7 +32,7 @@ class Pms5003adapter extends EventEmitter {
         const frameBuffer = serialdata.slice(0, 32)
         serialdata = serialdata.slice(32)
         let frame = this.readFrame(frameBuffer)
-        frame.time = new Date().toISOString()
+        frame.time = moment().format('YYYY-MM-DD HH:mm:ss')
         frame.model = 'pms5003'
         frame.id = 1
         this.emit('sensor_event', frame)
