@@ -22,7 +22,7 @@ Immediate readings for
 ![screenshot](./screenshot.png)
 
 ### Setup
-- Make your a copy of each `secret_config/*.json.template` file as `secret_config/*.json` and fill in the necesary values.
+- Make your a copy of each `secret_config/*.json.template` file as `secret_config/*.json` and fill in the necessary values.
 - Build or install [rtl_433](https://github.com/merbanan/rtl_433), and ensure that `rtl_433` can successfully find and read your software defined radio device (eg. an RTL2832-based USB TV dongle).
 - Edit `devices: [...]` in `index.js` to include the 433MHz device models you wish to receive (rtl_433 -R parameters)
 
@@ -33,4 +33,4 @@ Or run as a daemon (uses [`forever`](https://github.com/foreverjs/forever)):
 `npm run start-daemon`  
 `npm run stop-daemon`  
 
-Debug logging is output by setting variable `DEBUG` with named loggers eg: `DEBUG=webmon npm start`
+Debug logging is output by setting environment variable `DEBUG` with named loggers eg: `DEBUG=webmon npm start`
