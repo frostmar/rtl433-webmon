@@ -5,8 +5,6 @@ const moment = require('moment')
 const smartthingsConfig = require('./secret_config/smartthings-config.json')
 const smartthingsBaseUrl = 'https://api.smartthings.com/v1'
 
-const humidityDevId = 'd142b6c5-977b-44a9-9dc9-b8f1ba898d3e'
-
 class SmartThingsAdapter extends EventEmitter {
   constructor () {
     const POLL_RATE_MSEC = 30 * 1000
@@ -38,7 +36,7 @@ class SmartThingsAdapter extends EventEmitter {
    */
   async getTemperatureAndHumidity () {
     const options = {
-      uri: `${smartthingsBaseUrl}/devices/${humidityDevId}/status`,
+      uri: `${smartthingsBaseUrl}/devices/${smartthingsConfig.tempHumidityDevId}/status`,
       auth: { bearer: smartthingsConfig.accessToken },
       json: true
     }

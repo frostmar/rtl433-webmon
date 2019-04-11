@@ -1,0 +1,5 @@
+{
+  "README": "Samsung SmartThings accessToken with permission to read sensors; device id of a temperature & humidity device",
+  "accessToken": "........-....-....-....-............",
+  "tempHumidityDevId": "........-....-....-....-............"
+}

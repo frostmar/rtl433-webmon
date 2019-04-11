@@ -1,0 +1,6 @@
+{
+  "README": "AWS access key with permission to write to CloudWatch",
+  "accessKeyId": "....................", 
+  "secretAccessKey": ".......................................", 
+  "region": "eu-west-1"
+}

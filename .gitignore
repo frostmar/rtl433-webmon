@@ -42,4 +42,4 @@ jspm_packages
 #
 
 # configuration secrets
-secret_config/
+secret_config/*.json
