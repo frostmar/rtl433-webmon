@@ -8,6 +8,7 @@ app.service('SensorDataService', function ($rootScope) {
   var self = this
   self.sensordata = {
     CurrentCost: {},
+    KwhToday: {},
     Temperature: {}
   }
 
@@ -19,6 +20,9 @@ app.service('SensorDataService', function ($rootScope) {
     if (typeof event.power0 !== 'undefined') {
       // power sensor
       self.sensordata.CurrentCost[event.dev_id] = event
+    } else if (typeof event.kwh_today !== 'undefined') {
+      // electricityIntegrator total energy so far today
+      self.sensordata.KwhToday[event.id] = event
     } else if (typeof event.temperature_C !== 'undefined') {
       // temperature/humidity sensor
       self.sensordata.Temperature[event.id] = event
@@ -43,6 +47,14 @@ app.service('SensorDataService', function ($rootScope) {
    */
   self.getPowerSensorData = function (deviceId) {
     return self.sensordata.CurrentCost[deviceId]
+  }
+
+  /**
+   * get data object for a particular KwhToday "sensor"
+   * @returns {object}
+   */
+  self.getKwhTodayData = function (deviceId) {
+    return self.sensordata.KwhToday[deviceId]
   }
 
   /**
@@ -114,6 +126,35 @@ function PowerDisplayController ($scope, SensorDataService) {
     console.log('PowerDisplayController onDataChange for deviceid=' + ctrl.deviceid)
     if (newValue) {
       ctrl.power = newValue.power0
+      ctrl.time = newValue.time
+    }
+  }
+}
+
+/// ///////////////////////////////
+
+app.component('kwhTodayDisplay', {
+  templateUrl: 'kwhTodayDisplay.html',
+  controller: KwhTodayDisplayController,
+  bindings: {
+    deviceid: '<'
+  }
+})
+
+function KwhTodayDisplayController ($scope, SensorDataService) {
+  var ctrl = this
+  ctrl.power = undefined
+
+  $scope.$watch(watchFunction, onDataChange)
+
+  function watchFunction () {
+    return SensorDataService.getKwhTodayData(ctrl.deviceid)
+  }
+
+  function onDataChange (newValue, oldValue) {
+    console.log('KwhTodayDisplayController onDataChange for deviceid=' + ctrl.deviceid)
+    if (newValue) {
+      ctrl.kwh_today = newValue.kwh_today
       ctrl.time = newValue.time
     }
   }

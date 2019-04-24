@@ -6,6 +6,7 @@ const Pms5003adapter = require('./pms5003adapter.js')
 const Rtl433EventCache = require('./rtl433eventcache.js')
 const SmartThingsAdapter = require('./smartthings-adapter.js')
 const CloudwatchPublisher = require('./cloudwatch-publisher.js')
+const ElectricityIntegrator = require('./electricity-integrator.js')
 const express = require('express')
 const path = require('path')
 
@@ -56,8 +57,14 @@ pms5003.on('sensor_event', processEvent)
 const smartThingsAdapter = new SmartThingsAdapter()
 smartThingsAdapter.on('sensor_event', processEvent)
 
+// ==== input/output: read Electricity power readings, integrate, output energy used
+const electricityIntegrator = new ElectricityIntegrator()
+electricityIntegrator.on('sensor_event', processEvent)
+
+// ==== output: cache event so web app can fetch last event for each sensor on page load
 const eventCache = new Rtl433EventCache()
 
+// ==== output: publish to AWS CloudWatch
 const publisher = new CloudwatchPublisher()
 
 /**
@@ -66,13 +73,14 @@ const publisher = new CloudwatchPublisher()
  * @param {object} event - event structure as output by rtl_433
  */
 function processEvent (event) {
-  debug('processEvent (raw): %O', event)
+  // debug('processEvent (raw): %O', event)
   addNameToEvent(event)
   if (event.sensorName) {
     debug('processEvent: (named): %O', event)
     eventCache.store(event)
-    io.volatile.emit('sensor_event', event)
+    io.emit('sensor_event', event)
     publisher.newEvent(event)
+    electricityIntegrator.handleEvent(event)
   }
 }
 
@@ -82,6 +90,7 @@ const sensorId2Name = {
   'Nexus Temperature/Humidity|132': 'garage',
   'WT450 sensor|1': 'outdoor',
   'CurrentCost TX|2115': 'electricity',
+  'ElectricityIntegrator|1': 'electricity_kwh_today',
   'pms5003|1': 'airquality'
 }
 

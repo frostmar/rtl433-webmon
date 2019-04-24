@@ -1,4 +1,4 @@
-const debug = require('debug')('webmon:publisher')
+const debug = require('debug')('webmon:cloudwatchpublisher')
 const AWS = require('aws-sdk')
 AWS.config.update(AWS.config.loadFromPath('./secret_config/aws-config.json'))
 
@@ -105,8 +105,8 @@ class CloudwatchPublisher {
         ]
       }
       this.cloudwatch.putMetricData(putMetricParams, (err, data) => {
-        if (err) console.log('Error putting data to CloudWatch: ' + err, err.stack)
-        else console.log('Put data to CloudWatch OK: ' + JSON.stringify(data))
+        if (err) debug('Error putting data to CloudWatch: ' + err, err.stack)
+        else debug('Put data to CloudWatch OK: ' + JSON.stringify(data))
       })
     }
 
