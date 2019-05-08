@@ -70,6 +70,13 @@ class CloudwatchPublisher {
       }
       this.pendingReadings['electricity/power'].addMetric(event.power0)
     }
+    if (event.kwh_day_total) {
+      // total electricity usage for a complete day
+      if (!this.pendingReadings['electricity/kwh_day_total']) {
+        this.pendingReadings['electricity/kwh_day_total'] = new MetricsSet()
+      }
+      this.pendingReadings['electricity/kwh_day_total'].addMetric(event.kwh_day_total)
+    }
     if (event.temperature_C) {
       // temperature
       if (!this.pendingReadings['temperature/' + event.sensorName]) {
