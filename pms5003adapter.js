@@ -31,7 +31,7 @@ class Pms5003adapter extends EventEmitter {
       if (serialdata.length >= 32) {
         const frameBuffer = serialdata.slice(0, 32)
         serialdata = serialdata.slice(32)
-        let frame = this.readFrame(frameBuffer)
+        const frame = this.readFrame(frameBuffer)
         frame.time = moment().format('YYYY-MM-DD HH:mm:ss')
         frame.model = 'pms5003'
         frame.id = 1
@@ -49,21 +49,21 @@ class Pms5003adapter extends EventEmitter {
   readFrame (buffer) {
     debug('getPacket() entry')
     const frame = {
-      'framelength': buffer.readInt16BE(2),
-      'apm1': buffer.readInt16BE(4), // Data  1 refers to PM1.0 concentration unit μg/m3 (CF=1，standard particle)
-      'apm2_5': buffer.readInt16BE(6), // Data  2 refers to PM2.5 concentration unit μg/m3 (CF=1，standard particle)
-      'apm10': buffer.readInt16BE(8), // Data  3 refers to PM10  concentration unit μg/m3 (CF=1，standard particle)
-      'pm1': buffer.readInt16BE(10), // Data  4 refers to PM1.0 concentration unit μg/m3 (under atmospheric environment)
-      'pm2_5': buffer.readInt16BE(12), // Data  5 refers to PM2.5 concentration unit μg/m3 (under atmospheric environment)
-      'pm10': buffer.readInt16BE(14), // Data  6 refers to PM10  concentration unit μg/m3 (under atmospheric environment)
-      'gt0_3um': buffer.readInt16BE(16), // Data  7 indicates the number of particles with diameter beyond  0.3 um in 0.1 L of air
-      'gt0_5um': buffer.readInt16BE(18), // Data  8 indicates the number of particles with diameter beyond  0.5 um in 0.1 L of air
-      'gt1um': buffer.readInt16BE(20), // Data  9 indicates the number of particles with diameter beyond  1.0 um in 0.1 L of air
-      'gt2_5um': buffer.readInt16BE(22), // Data 10 indicates the number of particles with diameter beyond 2.5 um in 0.1 L of air
-      'gt5um': buffer.readInt16BE(24), // Data 11 indicates the number of particles with diameter beyond 5.0 um in 0.1 L of air
-      'gt10um': buffer.readInt16BE(26), // Data 12 indicates the number of particles with diameter beyond 10  um in 0.1 L of air
-      'data13_reserved': buffer.readInt16BE(28), // Data 13 reserved
-      'check': buffer.readInt16BE(30) // Data 14 Check code = Start character 1 + Start character 2 + Data 1... + Data 13
+      framelength: buffer.readInt16BE(2),
+      apm1: buffer.readInt16BE(4), // Data  1 refers to PM1.0 concentration unit μg/m3 (CF=1，standard particle)
+      apm2_5: buffer.readInt16BE(6), // Data  2 refers to PM2.5 concentration unit μg/m3 (CF=1，standard particle)
+      apm10: buffer.readInt16BE(8), // Data  3 refers to PM10  concentration unit μg/m3 (CF=1，standard particle)
+      pm1: buffer.readInt16BE(10), // Data  4 refers to PM1.0 concentration unit μg/m3 (under atmospheric environment)
+      pm2_5: buffer.readInt16BE(12), // Data  5 refers to PM2.5 concentration unit μg/m3 (under atmospheric environment)
+      pm10: buffer.readInt16BE(14), // Data  6 refers to PM10  concentration unit μg/m3 (under atmospheric environment)
+      gt0_3um: buffer.readInt16BE(16), // Data  7 indicates the number of particles with diameter beyond  0.3 um in 0.1 L of air
+      gt0_5um: buffer.readInt16BE(18), // Data  8 indicates the number of particles with diameter beyond  0.5 um in 0.1 L of air
+      gt1um: buffer.readInt16BE(20), // Data  9 indicates the number of particles with diameter beyond  1.0 um in 0.1 L of air
+      gt2_5um: buffer.readInt16BE(22), // Data 10 indicates the number of particles with diameter beyond 2.5 um in 0.1 L of air
+      gt5um: buffer.readInt16BE(24), // Data 11 indicates the number of particles with diameter beyond 5.0 um in 0.1 L of air
+      gt10um: buffer.readInt16BE(26), // Data 12 indicates the number of particles with diameter beyond 10  um in 0.1 L of air
+      data13_reserved: buffer.readInt16BE(28), // Data 13 reserved
+      check: buffer.readInt16BE(30) // Data 14 Check code = Start character 1 + Start character 2 + Data 1... + Data 13
     }
     return frame
   }

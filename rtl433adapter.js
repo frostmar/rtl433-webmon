@@ -24,9 +24,9 @@ class Rtl433adapter extends EventEmitter {
     this.childProcess.stdout.on('data', (data) => {
       debug('rtl433 data received: ' + data)
       lineBuffer += data
-      let newlinePos = lineBuffer.indexOf('\n')
+      const newlinePos = lineBuffer.indexOf('\n')
       if (newlinePos !== -1) {
-        let readingString = lineBuffer.substring(0, newlinePos)
+        const readingString = lineBuffer.substring(0, newlinePos)
         lineBuffer = lineBuffer.substring(newlinePos + 1)
         const reading = JSON.parse(readingString)
         this.emit('sensor_event', reading)

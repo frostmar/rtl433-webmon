@@ -24,12 +24,12 @@ describe('rtl433adapter', function () {
   it('accumulates stdout data events and emits JSON sensor_event', function () {
     var actualReading
     var expectedReading = {
-      'time': '2016-06-28 00:31:23',
-      'model': 'CurrentCost TX',
-      'dev_id': 2115,
-      'power0': 514,
-      'power1': 3,
-      'power2': 2
+      time: '2016-06-28 00:31:23',
+      model: 'CurrentCost TX',
+      dev_id: 2115,
+      power0: 514,
+      power1: 3,
+      power2: 2
     }
 
     adapter.on('sensor_event', function (theReading) { actualReading = theReading })
