@@ -4,21 +4,21 @@
   "description": "web front end for a software defined radio reading sensors",
   "main": "index.js",
   "dependencies": {
-    "aws-sdk": "^2.493.0",
+    "aws-sdk": "^2.584.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "forever": "^1.0.0",
     "moment": "^2.24.0",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.7",
+    "request-promise-native": "^1.0.8",
     "serialport": "^7.1.5",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.1.4",
-    "sinon": "^7.3.2",
-    "standard": "^13.0.2"
+    "mocha": "^6.2.2",
+    "sinon": "^7.5.0",
+    "standard": "^13.1.0"
   },
   "scripts": {
     "start": "node index.js",
