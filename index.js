@@ -12,7 +12,7 @@ const path = require('path')
 
 // ==== Express app
 debug('starting')
-var app = express()
+const app = express()
 app.set('port', (process.env.PORT || 3000))
 app.use('/', express.static(path.join(__dirname, 'public')))
 
@@ -25,13 +25,13 @@ app.use(function (req, res, next) {
   next()
 })
 
-var server = app.listen(app.get('port'), function () {
+const server = app.listen(app.get('port'), function () {
   debug('Server started on: http://localhost:' + app.get('port'))
   console.log('Server started on: http://localhost:' + app.get('port'))
 })
 
 // ==== Socket.io
-var io = require('socket.io')(server)
+const io = require('socket.io')(server)
 
 /** websocket connection handler */
 io.on('connection', function (socket) {

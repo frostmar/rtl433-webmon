@@ -1,11 +1,11 @@
 'use strict'
 
 // Angular app level module which depends on views, and components
-var app = angular.module('rtl433webmon', [])
+const app = angular.module('rtl433webmon', [])
 
 // Angular service holding sensor data (from websocket)
 app.service('SensorDataService', function ($rootScope) {
-  var self = this
+  const self = this
   self.sensordata = {
     CurrentCost: {},
     KwhToday: {},
@@ -79,7 +79,7 @@ app.component('temperatureDisplay', {
 })
 
 function TemperatureDisplayController ($scope, SensorDataService) {
-  var ctrl = this
+  const ctrl = this
   ctrl.temperature_C = undefined
   ctrl.temperatureOffset = ctrl.temperatureOffset ? ctrl.temperatureOffset : 0
   ctrl.humidity = undefined
@@ -113,7 +113,7 @@ app.component('powerDisplay', {
 })
 
 function PowerDisplayController ($scope, SensorDataService) {
-  var ctrl = this
+  const ctrl = this
   ctrl.power = undefined
 
   $scope.$watch(watchFunction, onDataChange)
@@ -142,7 +142,7 @@ app.component('kwhTodayDisplay', {
 })
 
 function KwhTodayDisplayController ($scope, SensorDataService) {
-  var ctrl = this
+  const ctrl = this
   ctrl.power = undefined
 
   $scope.$watch(watchFunction, onDataChange)
@@ -169,7 +169,7 @@ app.component('airQualityDisplay', {
 })
 
 function AirQualityDisplayController ($scope, SensorDataService) {
-  var ctrl = this
+  const ctrl = this
   ctrl.pm10 = undefined
 
   $scope.$watch(watchFunction, onDataChange)

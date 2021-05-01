@@ -6,9 +6,9 @@ const Rtl433adapter = require('../rtl433adapter.js')
 const EventEmitter = require('events')
 
 describe('rtl433adapter', function () {
-  var adapter
-  var fakeChildProcess
-  var rtl433adapterSpawnChildStub
+  let adapter
+  let fakeChildProcess
+  let rtl433adapterSpawnChildStub
 
   beforeEach(function () {
     fakeChildProcess = {}
@@ -22,8 +22,8 @@ describe('rtl433adapter', function () {
   })
 
   it('accumulates stdout data events and emits JSON sensor_event', function () {
-    var actualReading
-    var expectedReading = {
+    let actualReading
+    const expectedReading = {
       time: '2016-06-28 00:31:23',
       model: 'CurrentCost TX',
       dev_id: 2115,
