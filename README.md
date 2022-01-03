@@ -31,7 +31,7 @@ Immediate readings for
 Run in the foreground: `npm start`
 
 Or run as a daemon (uses [`forever`](https://github.com/foreverjs/forever)):  
-`npm run start-daemon`  
-`npm run stop-daemon`  
+`npm run daemon-start`  
+`npm run daemon-stop`  
 
 Debug logging is output by setting environment variable `DEBUG` with named loggers eg: `DEBUG=webmon npm start`
