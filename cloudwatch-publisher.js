@@ -63,12 +63,12 @@ class CloudwatchPublisher {
       }
       this.pendingReadings['airquality/pm2.5'].addMetric(event.pm2_5)
     }
-    if (event.power0) {
+    if (event.power0_W) {
       // power meter
       if (!this.pendingReadings['electricity/power']) {
         this.pendingReadings['electricity/power'] = new MetricsSet()
       }
-      this.pendingReadings['electricity/power'].addMetric(event.power0)
+      this.pendingReadings['electricity/power'].addMetric(event.power0_W)
     }
     if (event.kwh_day_total) {
       // total electricity usage for a complete day

@@ -44,7 +44,7 @@ io.on('connection', function (socket) {
 })
 
 // ==== input: RTL433 radio
-const rtl433Options = { devices: [19, 33, 43] }
+const rtl433Options = { devices: [19, 33, 44] }
 const rtl433 = new Rtl433adapter(rtl433Options)
 rtl433.on('sensor_event', processEvent)
 
@@ -89,7 +89,7 @@ const sensorId2Name = {
   'SmartThings Temperature/Humidity|99': 'indoor',
   'Nexus Temperature/Humidity|152': 'garage',
   'WT450 sensor|1': 'outdoor',
-  'CurrentCost TX|2115': 'electricity',
+  'CurrentCost-TX|2115': 'electricity',
   'ElectricityIntegrator|1': 'electricity_kwh_today',
   'pms5003|1': 'airquality'
 }

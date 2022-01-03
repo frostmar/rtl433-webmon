@@ -17,9 +17,9 @@ app.service('SensorDataService', function ($rootScope) {
     // debug logging
     console.log('websocket sensor_event', event)
 
-    if (typeof event.power0 !== 'undefined') {
+    if (typeof event.power0_W !== 'undefined') {
       // power sensor
-      self.sensordata.CurrentCost[event.dev_id] = event
+      self.sensordata.CurrentCost[event.id] = event
     } else if (typeof event.kwh_today !== 'undefined') {
       // electricityIntegrator total energy so far today
       self.sensordata.KwhToday[event.id] = event
@@ -125,7 +125,7 @@ function PowerDisplayController ($scope, SensorDataService) {
   function onDataChange (newValue, oldValue) {
     console.log('PowerDisplayController onDataChange for deviceid=' + ctrl.deviceid)
     if (newValue) {
-      ctrl.power = newValue.power0
+      ctrl.power = newValue.power0_W
       ctrl.time = newValue.time
     }
   }

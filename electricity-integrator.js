@@ -19,7 +19,7 @@ class ElectricityIntegrator extends EventEmitter {
       if (this.lastReadingTime) {
         // we've had a previous reading, calculate the additional energy used
         const durationHrs = (now - this.lastReadingTime) / 1000 / 60 / 60
-        const additionalKwh = eventData.power0 / 1000 * durationHrs
+        const additionalKwh = eventData.power0_W / 1000 * durationHrs
         this.kwh += additionalKwh
       }
       this.lastReadingTime = now
