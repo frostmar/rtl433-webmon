@@ -95,7 +95,7 @@ function TemperatureDisplayController ($scope, SensorDataService) {
     if (newValue) {
       ctrl.temperature_C = newValue.temperature_C + ctrl.temperatureOffset
       ctrl.humidity = newValue.humidity
-      ctrl.lowbattery = (newValue.battery === 'LOW')
+      ctrl.lowbattery = (newValue.battery_ok === 0)
       ctrl.time = newValue.time
       ctrl.sensorName = newValue.sensorName
     }
