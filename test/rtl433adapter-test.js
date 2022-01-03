@@ -26,16 +26,16 @@ describe('rtl433adapter', function () {
     const expectedReading = {
       time: '2016-06-28 00:31:23',
       model: 'CurrentCost TX',
-      dev_id: 2115,
-      power0: 514,
-      power1: 3,
-      power2: 2
+      dev: 2115,
+      power0_W: 514,
+      power1_W: 3,
+      power2_W: 2
     }
 
     adapter.on('sensor_event', function (theReading) { actualReading = theReading })
     fakeChildProcess.stdout.emit('data', '{"time" : "2016-06-28 00:31:23", ')
-    fakeChildProcess.stdout.emit('data', '"model" : "CurrentCost TX", "dev_')
-    fakeChildProcess.stdout.emit('data', 'id" : 2115, "power0" : 514, "power1" : 3, "power2" : 2}' + '\n')
+    fakeChildProcess.stdout.emit('data', '"model" : "CurrentCost TX", "dev')
+    fakeChildProcess.stdout.emit('data', '" : 2115, "power0_W" : 514, "power1_W" : 3, "power2_W" : 2}' + '\n')
 
     expect(actualReading).deep.equals(expectedReading)
   })

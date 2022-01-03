@@ -15,7 +15,7 @@ describe('ElectricityIntegrator', () => {
   it('handles an electricity event, incrementing energy used', function () {
     const fakeElecEvent = {
       sensorName: 'electricity',
-      power0: 100 // watts
+      power0_W: 100 // watts
     }
     electricityIntegrator.handleEvent(fakeElecEvent)
     this.clock.tick(oneHourInMsec)
