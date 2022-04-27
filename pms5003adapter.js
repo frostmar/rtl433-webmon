@@ -2,7 +2,7 @@
 
 const debug = require('debug')('webmon:pms5003adapter')
 const EventEmitter = require('events').EventEmitter
-const SerialPort = require('serialport')
+const { SerialPort } = require('serialport')
 const moment = require('moment')
 const frameHeader = Buffer.from([0x42, 0x4d])
 
@@ -20,7 +20,7 @@ class Pms5003adapter extends EventEmitter {
     debug('constructed with options: %o', options)
     let serialdata = Buffer.from([])
 
-    const port = new SerialPort(options.serialdevice, { baudRate: 9600 })
+    const port = new SerialPort({ path: options.serialdevice, baudRate: 9600 })
     port.on('data', (newdata) => {
       debug(`serial data received: ${newdata.length} bytes`)
       serialdata = Buffer.concat([serialdata, newdata])
