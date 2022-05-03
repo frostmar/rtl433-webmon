@@ -87,7 +87,7 @@ function processEvent (event) {
 // our sensors - events from a model|id not listed here will get ignored
 const sensorId2Name = {
   'SmartThings Temperature/Humidity|99': 'indoor',
-  'Nexus-TH|152': 'garage',
+  'Nexus-TH|238': 'garage',
   'WT450 sensor|1': 'outdoor',
   'CurrentCost-TX|2115': 'electricity',
   'ElectricityIntegrator|1': 'electricity_kwh_today',
